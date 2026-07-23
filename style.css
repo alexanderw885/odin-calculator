@@ -24,7 +24,16 @@ body {
 
 #screen {
     flex: 1 1;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding: 0px 4px;
+}
+
+#display {
     text-align: right;
+    font-size: 36px;
+    margin: 0px;
 }
 
 
