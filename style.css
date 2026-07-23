@@ -15,8 +15,6 @@ body {
 
 
 #calc {
-    width: 350px;
-    height: 400px;
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -26,18 +24,23 @@ body {
 
 #screen {
     flex: 1 1;
+    text-align: right;
 }
 
+
 #buttons {
+    margin-top: 8px;
     flex: 5 1;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 #left {
     flex: 3 1;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 #right {
