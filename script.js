@@ -1,11 +1,10 @@
 const CALC_WIDTH = 350
-const CALC_HEIGHT = 400;
+const CALC_HEIGHT = 450;
 
 // Dynamically set up calculator width
 const calc = document.querySelector("#calc");
 calc.style.width = CALC_WIDTH + 'px';
 calc.style.height = CALC_HEIGHT + 'px';
-
 
 const button_div = document.querySelector("#buttons");
 button_div.style.height = (CALC_HEIGHT * 5 / 6) + 'px';
@@ -16,7 +15,7 @@ smallButtons.forEach((button) =>
 
 const largeButtons = document.querySelectorAll(".large");
 largeButtons.forEach((button) =>
-    button.style.flexBasis = (CALC_HEIGHT / 3) + 'px');
+    button.style.flexBasis = (CALC_HEIGHT / 3.4) + 'px');
 
 
 
