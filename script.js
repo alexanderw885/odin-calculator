@@ -156,3 +156,17 @@ button_div.addEventListener("click", (e) => {
 
 
 reset();
+
+
+
+const allButtons = document.querySelectorAll("button");
+allButtons.forEach((button) => {
+    button.addEventListener("mouseover", (e) => 
+        button.style.backgroundColor = "lightgray");
+    button.addEventListener("mouseout", (e) =>
+        button.style.backgroundColor = "white");
+    button.addEventListener("mousedown", (e) =>
+        button.style.backgroundColor = "grey");
+    button.addEventListener("mouseup", (e) =>
+        button.style.backgroundColor = "lightgray");
+})
