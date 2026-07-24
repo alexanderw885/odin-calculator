@@ -1,7 +1,7 @@
+// Dynamically set up calculator width
 const CALC_WIDTH = 350
 const CALC_HEIGHT = 450;
 
-// Dynamically set up calculator width
 const calc = document.querySelector("#calc");
 calc.style.width = CALC_WIDTH + 'px';
 calc.style.height = CALC_HEIGHT + 'px';
@@ -19,9 +19,9 @@ largeButtons.forEach((button) =>
 
 
 
-let val1;
-let val2;
-let op;
+let val1 = 0;
+let val2 = 0;
+let op = "+";
 
 
 function add(a, b){
@@ -45,11 +45,56 @@ function divide(a, b) {
 }
 
 
-function operate(a, b, operator) {
-    switch(operator) {
-        case "+": return add(a, b);
-        case "-": return subtract(a, b);
-        case "*": return multiply(a, b);
-        case "/": return divide(a, b);
+function operate() {
+    let out = 0;
+    switch(op) {
+        case "+": {
+            out = add(val1, val2);
+            break;
+        }
+        case "-": {
+            out = subtract(val1, val2);
+            break;
+        }
+        case "*": {
+            out = multiply(val1, val2);
+            break;
+        }
+        case "/": {
+            out = divide(val1, val2);
+            break;
+        }
     }
+    return out;
 }
+
+function updateScreen(value) {
+    const screen = document.querySelector(".display");
+    display.textContent = String(value);
+}
+
+button_div.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.nodeName !== 'BUTTON') return;
+
+    if (target.classList.contains("num")){
+        val2 = val2 * 10 + Number(target.textContent);
+        updateScreen(val2);
+    }
+
+    if (target.classList.contains("operator")) {
+        val1 = operate();
+        
+        val2 = 0;
+        op = target.textContent;
+        updateScreen(val1);
+    }
+
+    if (target.classList.contains("eq")) {
+        val1 = operate();
+        val2 = 0;
+        op = '+';
+        updateScreen(val1);
+    }
+    console.log(`${val1} ${op} ${val2}`);
+})
