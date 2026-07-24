@@ -80,6 +80,72 @@ function reset() {
     updateScreen(0);
 }
 
+function pressNum(value) {
+    if (usedEqual) {
+        reset();
+    }
+    if(decimalPlace === 0){
+        val2 = val2 * 10 + Number(value);
+    } else {
+        val2 = val2 + Number(value * (10 ** decimalPlace--));
+    }
+    updateScreen(val2);
+
+    if (val1 > MAX_VAL || val2 > MAX_VAL) {
+        reset();
+        updateScreen("VALUE TOO LARGE");
+    }
+}
+
+
+function pressOperator(value) {
+    decimalPlace = 0;
+    if (usedEqual) usedEqual = false;
+    if (op === '/' && val2 === 0) {
+        reset();
+        updateScreen("please don't");
+        return;
+    }
+
+    val1 = operate();
+    val2 = 0;
+    const newOp = value;
+    if (newOp === "=") {
+        op = '+';
+        usedEqual = true;
+    } else {
+        op = newOp;
+    }
+    updateScreen(val1);
+
+    if (val1 > MAX_VAL || val2 > MAX_VAL) {
+        reset();
+        updateScreen("VALUE TOO LARGE");
+    }
+}
+
+function pressDecimal(value) {
+    if (decimalPlace >= 0) {
+        decimalPlace = -1;
+    }
+}
+
+function pressClear(value) {
+    reset();
+}
+
+
+function pressDelete(value) {
+    if (decimalPlace >= 0)
+        val2 = Math.trunc(val2 / 10);
+    else {
+        val2 = Number(String(val2).slice(0, -1));
+        decimalPlace++;
+    }
+    updateScreen(val2);
+}
+
+
 function updateScreen(value) {
     if (typeof(value) == 'number') {
         value = Number(value.toPrecision(12));
@@ -95,60 +161,24 @@ button_div.addEventListener("click", (e) => {
     const classes = target.classList;
 
     if (classes.contains("num")){
-        if (usedEqual) {
-            reset();
-        }
-        if(decimalPlace === 0){
-            val2 = val2 * 10 + Number(target.textContent);
-        } else {
-            val2 = val2 + Number(target.textContent * (10 ** decimalPlace--));
-        }
-        updateScreen(val2);
+        pressNum(target.textContent);
     }
 
     else if (classes.contains("operator")) {
-        decimalPlace = 0;
-        if (usedEqual) usedEqual = false;
-        if (op === '/' && val2 === 0) {
-            reset();
-            updateScreen("please don't");
-            return;
-        }
-
-        val1 = operate();
-        val2 = 0;
-        const newOp = target.textContent;
-        if (newOp === "=") {
-            op = '+';
-            usedEqual = true;
-        } else {
-            op = newOp;
-        }
-        updateScreen(val1);
+        pressOperator(target.textContent);
     }
 
-    if (classes.contains("decimal")) {
-        decimalPlace = -1;
+    else if (classes.contains("decimal")) {
+        pressDecimal(target.textContent);
     }
 
 
     else if (classes.contains("clr")) {
-        reset();
+        pressClear(target.textContent);
     }
 
     else if (classes.contains("del")) {
-        if (decimalPlace >= 0)
-            val2 = Math.trunc(val2 / 10);
-        else {
-            val2 = Number(String(val2).slice(0, -1));
-            decimalPlace++;
-        }
-        updateScreen(val2);
-    }
-
-    if (val1 > MAX_VAL || val2 > MAX_VAL) {
-        reset();
-        updateScreen("VALUE TOO LARGE");
+        pressDelete(target.textContent);
     }
 
     console.log(val1, op, val2, usedEqual);
