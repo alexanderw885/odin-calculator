@@ -24,6 +24,7 @@ let val1 = 0;
 let val2 = 0;
 let op = "+";
 let usedEqual = false;
+let usedOperator = false;
 let decimalPlace = 0;
 
 
@@ -77,6 +78,7 @@ function reset() {
     op = "+";
     usedEqual = false;
     decimalPlace = 0;
+    usedOperator = false;
     updateScreen(0);
 }
 
@@ -84,6 +86,8 @@ function pressNum(value) {
     if (usedEqual) {
         reset();
     }
+    usedOperator = false;
+
     if(decimalPlace === 0){
         val2 = val2 * 10 + Number(value);
     } else {
@@ -101,11 +105,18 @@ function pressNum(value) {
 function pressOperator(value) {
     decimalPlace = 0;
     if (usedEqual) usedEqual = false;
+
+    if (usedOperator) {
+        op = value;
+        return;
+    }
+    
     if (op === '/' && val2 === 0) {
         reset();
         updateScreen("please don't");
         return;
     }
+    
 
     val1 = operate();
     val2 = 0;
@@ -118,6 +129,8 @@ function pressOperator(value) {
     }
     updateScreen(val1);
 
+    usedOperator = true;
+
     if (val1 > MAX_VAL || val2 > MAX_VAL) {
         reset();
         updateScreen("VALUE TOO LARGE");
@@ -126,6 +139,7 @@ function pressOperator(value) {
 
 function pressDecimal(value) {
     if (decimalPlace >= 0) {
+        usedOperator = false;
         decimalPlace = -1;
     }
 }
@@ -181,7 +195,7 @@ button_div.addEventListener("click", (e) => {
         pressDelete(target.textContent);
     }
 
-    console.log(val1, op, val2, usedEqual);
+    console.log(val1, op, val2, usedOperator);
 })
 
 
