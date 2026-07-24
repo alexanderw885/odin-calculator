@@ -110,7 +110,7 @@ function pressOperator(value) {
         op = value;
         return;
     }
-    
+
     if (op === '/' && val2 === 0) {
         reset();
         updateScreen("please don't");
@@ -168,6 +168,7 @@ function updateScreen(value) {
     display.textContent = value;
 }
 
+
 button_div.addEventListener("click", (e) => {
     const target = e.target;
     if (target.nodeName !== 'BUTTON') return;
@@ -213,4 +214,31 @@ allButtons.forEach((button) => {
         button.style.backgroundColor = "grey");
     button.addEventListener("mouseup", (e) =>
         button.style.backgroundColor = "lightgray");
+})
+
+const body = document.querySelector("body");
+body.addEventListener("keydown", (e) => {
+    const key = e.key;
+
+    const numbers = "0123456789".split('');
+    const operators = "* / + - = Enter".split(' ');
+    console.log(Array.isArray(operators), operators)
+    console.log(key);
+    if (numbers.includes(key)) {
+        pressNum(key);
+    } 
+    else if (operators.includes(key)) {
+        if (key === "Enter"){
+            pressOperator("=");
+        }
+        else {
+            pressOperator(key);
+        }
+    }
+    else if (key ==='c') {
+        pressDecimal(key);
+    }
+    else if (key === 'Backspace') {
+        pressDelete("del");
+    }
 })
