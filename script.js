@@ -22,6 +22,7 @@ largeButtons.forEach((button) =>
 let val1 = 0;
 let val2 = 0;
 let op = "+";
+let usedEqual = false;
 
 
 function add(a, b){
@@ -40,8 +41,7 @@ function multiply(a, b) {
 
 
 function divide(a, b) {
-    if (b == 0) return 0;
-    return a / b;
+    return (b === 0) ? "please don't" : a / b;
 }
 
 
@@ -68,33 +68,66 @@ function operate() {
     return out;
 }
 
+function reset() {
+    console.log(val1);
+    val1 = 0;
+    val2 = 0;
+    op = "+";
+    usedEqual = false;
+    updateScreen(0);
+}
+
 function updateScreen(value) {
     const screen = document.querySelector(".display");
-    display.textContent = String(value);
+    display.textContent = value;
 }
 
 button_div.addEventListener("click", (e) => {
     const target = e.target;
     if (target.nodeName !== 'BUTTON') return;
 
-    if (target.classList.contains("num")){
+    const classes = target.classList;
+
+    if (classes.contains("num")){
+        if (usedEqual) {
+            reset();
+        }
         val2 = val2 * 10 + Number(target.textContent);
         updateScreen(val2);
     }
 
-    if (target.classList.contains("operator")) {
+    else if (classes.contains("operator")) {
+        if (usedEqual) usedEqual = false;
+        if (op === '/' && val2 === 0) {
+            reset();
+            updateScreen("please don't");
+            return;
+        }
+
         val1 = operate();
-        
         val2 = 0;
-        op = target.textContent;
+        const newOp = target.textContent;
+        if (newOp === "=") {
+            op = '+';
+            usedEqual = true;
+        } else {
+            op = newOp;
+        }
         updateScreen(val1);
+
     }
 
-    if (target.classList.contains("eq")) {
-        val1 = operate();
-        val2 = 0;
-        op = '+';
-        updateScreen(val1);
+
+    else if (classes.contains("clr")) {
+        reset();
     }
-    console.log(`${val1} ${op} ${val2}`);
+
+    else if (classes.contains("del")) {
+        val2 = Math.trunc(val2 / 10);
+        updateScreen(val2);
+    }
+    console.log(val1, op, val2, usedEqual);
 })
+
+
+reset();
