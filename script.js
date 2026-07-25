@@ -196,24 +196,20 @@ button_div.addEventListener("click", (e) => {
         pressDelete(target.textContent);
     }
 
-    console.log(val1, op, val2, usedOperator);
+    // console.log(val1, op, val2, usedOperator);
 })
-
-
-reset();
-
 
 
 const allButtons = document.querySelectorAll("button");
 allButtons.forEach((button) => {
     button.addEventListener("mouseover", (e) => 
-        button.style.backgroundColor = "lightgray");
+        button.style.backgroundColor = "lightgrey");
     button.addEventListener("mouseout", (e) =>
         button.style.backgroundColor = "white");
     button.addEventListener("mousedown", (e) =>
         button.style.backgroundColor = "grey");
     button.addEventListener("mouseup", (e) =>
-        button.style.backgroundColor = "lightgray");
+        button.style.backgroundColor = "lightgrey");
 })
 
 const body = document.querySelector("body");
@@ -242,3 +238,6 @@ body.addEventListener("keydown", (e) => {
         pressDelete("del");
     }
 })
+
+
+reset();

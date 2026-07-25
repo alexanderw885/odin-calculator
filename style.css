@@ -4,8 +4,38 @@
 
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+}
+
+
+.header {
+    align-self: stretch;
+    display: flex;
+    height: 100px;
+    background-color: darkblue;
+    justify-content: center;
+    padding: 16px;
+    margin: -8px;
+}
+
+.text {
+    color: beige;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.text > h1 {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0px
+}
+
+.text > h2 {
+    font-size: 28px;
+    margin: 0px;
 }
 
 
@@ -20,20 +50,15 @@ body {
 
 
 #screen {
-    border: 2px solid black
-}
-
-
-#screen {
     flex: 1 1;
     display: flex;
     justify-content: right;
     align-items: center;
     padding: 0px 4px;
+    border: 2px solid black
 }
 
 #display {
-    text-align: right;
     font-size: 36px;
     margin: 0px;
 }
@@ -47,20 +72,11 @@ body {
     flex-wrap: wrap;
 }
 
-#left {
-    flex: 3 1;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+button {
+    border-radius: 6px;
+    font-size: 24px;
+    background-color: white;
 }
-
-#right {
-    flex: 1 1;
-    display: flex;
-    flex-direction: column;
-}
-
-
 
 .small {
     flex: 1 1;
@@ -70,8 +86,4 @@ body {
     flex: 2 1;
 }
 
-button {
-    border-radius: 6px;
-    font-size: 24px;
-    background-color: white;
-}
+
